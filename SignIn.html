@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="SignIn.css">
+    <script src="SignInBefore.js"></script>
+</head>
+<body>
+    <h1 id="pageTitle">Meeting Sign-In</h1>
+    <div id="cardContainer"><input id="numberField" type="text" value="Temp text" autofocus onchange="WaitCheck()"></div>
+    <h2>Swipe Your Bearcat Card</h2>
+    <div id="buttonContainer">
+        <input type="button" id="noCardButton" onclick="ManualInfo(0)" value="I Don't Have My Bearcat Card" />
+    </div>
+    <div id="formContainer">
+        <form>
+            <input type="text" name="mnumber" placeholder="M-Number"><br />
+            <input type="text" name="firstname" placeholder="First Name"><br />
+            <input type="text" name="lastname" placeholder="Last Name"><br />
+            <input type="text" name="email" placeholder="Email"><br />
+            <input type="button" id="enterInfo" value="Enter" />
+        </form>
+    </div>
+</body>
+<script src="SignIn.js"></script>
+</html>
