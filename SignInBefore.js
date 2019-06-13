@@ -1,14 +1,14 @@
 ﻿WaitCheck = function () {
     setTimeout(function() {
-        CheckCard(document.getElementById("numberField").value);
+        CheckCard(document.getElementById("number-field").value);
     }, 1000);
 }
 
 CheckCard = function (cardInput) {
     if ((cardInput.length != 33) || (cardInput.charAt(32) != "?")) {
-        alert("not correct");
-        document.getElementById("numberField").value = "";
-        document.getElementById("numberField").focus();
+        alert('not correct');
+        document.getElementById("number-field").value = '';
+        document.getElementById("number-field").focus();
         return;
     }
     else {
@@ -18,12 +18,12 @@ CheckCard = function (cardInput) {
         }
         //Name is not found
         else {
-            document.getElementById("formContainer").style.visibility = "visible";
+            document.getElementById("form-container").style.visibility = 'visible';
         }
-        alert("Correct!!");
+        alert('Correct!!');
     }
 };
 
 ManualInfo = function () {
-    document.getElementById("formContainer").style.visibility = "visible";
+    document.getElementById("form-container").style.visibility = 'visible';
 };

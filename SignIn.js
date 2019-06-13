@@ -1,2 +1,2 @@
-document.getElementById("numberField").focus();
-document.getElementById("numberField").value = "";
+document.getElementById("number-field").focus();
+document.getElementById("number-field").value = "";
