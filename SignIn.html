@@ -4,25 +4,35 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" type="text/css" href="SignIn.css">
-    <script src="SignInBefore.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/SignIn.css">
+    <script src="scripts/SignInBefore.js"></script>
 </head>
 <body>
-    <h1 id="page-title">Meeting Sign-In</h1>
-    <div id="card-container"><input id="number-field" type="text" value="Temp text" autofocus onchange="WaitCheck()"></div>
-    <h2>Swipe Your Bearcat Card</h2>
-    <div id="button-container">
-        <input type="button" id="no-card-button" onclick="ManualInfo(0)" value="I Don't Have My Bearcat Card" />
-    </div>
-    <div id="form-container">
-        <form>
-            <input type="text" name="mnumber" placeholder="M-Number"><br />
-            <input type="text" name="firstname" placeholder="First Name"><br />
-            <input type="text" name="lastname" placeholder="Last Name"><br />
-            <input type="text" name="email" placeholder="Email"><br />
-            <input type="button" id="enter-info" value="Enter" />
-        </form>
+    <div id="main-container">
+        <header><a href="https://tribunal.uc.edu"><img src="images/tribunal_logo.png" alt="Tribunal logo" /></a></header>
+
+        <div id="card-container"><input id="number-field" type="text" value="Temp text" onblur="this.focus()" autofocus onchange="WaitCheck()"></div>
+        <input type="button" id="tempButton" onclick="showModal('swipe-message')"/>
+        <input type="button" id="tempButton" onclick="showModal('success-message')"/>
+        <input type="button" id="tempButton" onclick="showModal('fail-message')"/>
+        <h1 id="title">Meeting Sign-In</h1>
+
+            <form id="form-container">
+                <h2 id="instruction">Swipe Your Bearcat Card</h2>
+                <input type="button" id="alternate-info" onclick="ManualInfo(0)" value="Don't Have Your Card? Click Here." />
+                <input type="text" class="hidden" id="first-name" name="first-name" placeholder="First Name"><br />
+                <input type="text" class="hidden" id="last-name" name="last-name" placeholder="Last Name"><br />
+                <input type="text" class="hidden" id="m-number" name="m-number" placeholder="M-Number"><br />
+                <input type="text" class="hidden" id="email" name="email" placeholder="Email"><br />
+                <input type="button" class="hidden" id="submit-button" value="Sign In" onclick="SubmitInfo()"/>
+            </form>
+
+        <div id="swipe-message" class="modal"><h3>Unable to Read<br>Swipe Again</h3></div>
+        <div id="not-found-message" class="modal"><h3>Sign in Manually to Add Yourself to the Database</h3></div>
+        <div id="success-message" class="modal"><h3>You Are Now Signed In</h3></div>
+        <div id="fail-message" class="modal"><h3>Unable to Sign In, Try Again</h3></div>
+
     </div>
 </body>
-<script src="SignIn.js"></script>
+<script src="scripts/SignIn.js"></script>
 </html>
