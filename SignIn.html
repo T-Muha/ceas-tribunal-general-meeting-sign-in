@@ -3,36 +3,35 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>CEAS Tribunal General Meeting Sign-In</title>
     <link rel="stylesheet" type="text/css" href="styles/SignIn.css">
-    <script src="scripts/SignInBefore.js"></script>
+    <script src="scripts/main.js"></script>
 </head>
 <body>
     <div id="main-container">
         <header><a href="https://tribunal.uc.edu"><img src="images/tribunal_logo.png" alt="Tribunal logo" /></a></header>
 
-        <div id="card-container"><input id="number-field" type="text" value="Temp text" onblur="this.focus()" autofocus onchange="WaitCheck()"></div>
-        <input type="button" id="tempButton" onclick="showModal('swipe-message')"/>
-        <input type="button" id="tempButton" onclick="showModal('success-message')"/>
-        <input type="button" id="tempButton" onclick="showModal('fail-message')"/>
+        <div id="card-container"><input id="number-field" type="text" value="Temp text" onblur="this.focus()" autofocus onchange="WaitForSwipe()"></div>
         <h1 id="title">Meeting Sign-In</h1>
 
             <form id="form-container">
                 <h2 id="instruction">Swipe Your Bearcat Card</h2>
-                <input type="button" id="alternate-info" onclick="ManualInfo(0)" value="Don't Have Your Card? Click Here." />
+                <input type="button" id="alternate-info" onclick="ManualInfo()" value="Don't Have Your Card? Click Here." />
                 <input type="text" class="hidden" id="first-name" name="first-name" placeholder="First Name"><br />
                 <input type="text" class="hidden" id="last-name" name="last-name" placeholder="Last Name"><br />
                 <input type="text" class="hidden" id="m-number" name="m-number" placeholder="M-Number"><br />
                 <input type="text" class="hidden" id="email" name="email" placeholder="Email"><br />
                 <input type="button" class="hidden" id="submit-button" value="Sign In" onclick="SubmitInfo()"/>
+                <h2 id="signed-in" class="hidden">You Successfully Signed in</h2>
             </form>
 
         <div id="swipe-message" class="modal"><h3>Unable to Read<br>Swipe Again</h3></div>
         <div id="not-found-message" class="modal"><h3>Sign in Manually to Add Yourself to the Database</h3></div>
-        <div id="success-message" class="modal"><h3>You Are Now Signed In</h3></div>
         <div id="fail-message" class="modal"><h3>Unable to Sign In, Try Again</h3></div>
+
+        <div id="hidden-id-container">unknown</div>
 
     </div>
 </body>
-<script src="scripts/SignIn.js"></script>
+<script src="scripts/loaded.js"></script>
 </html>
