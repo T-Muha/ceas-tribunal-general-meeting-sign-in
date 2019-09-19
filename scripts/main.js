@@ -6,63 +6,83 @@ WaitForSwipe = function () {
 }
 
 ////Validates input and asks/responds to existstance of id
-function CheckCard (cardInput) {
-    if ((cardInput.length != 33) || (cardInput.charAt(32) != "?")) {
-        ShowModal("swipe-message");
-        document.getElementById("number-field").value = '';
-        document.getElementById("number-field").focus();
-    }
-    else {
-        cardInput = cardInput.substr(3, 16);
-        GetMemberData(cardInput, 'unknown').then(function (result) {
-            if (result.exists) {
-                MarkAttendance(result.MNumber);
-                FinishSignIn();
+function CheckCard(cardInput) {
+    CheckOpen().then(function (result) {
+        if (!(result)) {
+            alert("Sign-In is not yet open.");
+            return;
+        }
+        else {
+            isOpen = CheckOpen().then(function (result) {
+                return result;
+            });
+            if (!(isOpen)) {
+                alert("Sign-In is not yet open.");
+                return;
+            }
+
+            if ((cardInput.length != 33) || (cardInput.charAt(32) != "?")) {
+                ShowModal("swipe-message");
+                document.getElementById("number-field").value = '';
+                document.getElementById("number-field").focus();
             }
             else {
-                document.getElementById("hidden-id-container").textContent = cardInput;
-                ShowModal("not-found-message");
-                setTimeout(ManualInfo, 5000);
+                cardInput = cardInput.substr(3, 16);
+                GetMemberData(cardInput, 'unknown').then(function (result) {
+                    if (result.exists) {
+                        MarkAttendance(result.Email);
+                        FinishSignIn();
+                    }
+                    else {
+                        document.getElementById("hidden-id-container").textContent = cardInput;
+                        ShowModal("not-found-message");
+                        setTimeout(ManualInfo, 5000);
+                    }
+                });
             }
-        });
-    }
+        }
+    });
 };
 
 ////Makes sure the current date is in the attendance table, then adds the user in that column
-function MarkAttendance(mNum) {
+function MarkAttendance(email) {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //Note: Jan is 0
     var yyyy = today.getFullYear();
     today = mm + '/' + dd + '/' + yyyy;
-    ValidateDate(today).then(function () {
-        SendAttendance(mNum, today);
-    });
+    SendAttendance(email, today);
 }
 
 ////Animates and makes the form available
 ManualInfo = function () {
-    document.getElementById("number-field").removeAttribute("onblur");
-    document.getElementById("number-field").blur();
+    CheckOpen().then(function (result) {
+        if (!(result)) {
+            alert("Sign-In is not yet open.");
+            return;
+        }
+        else {
+            document.getElementById("number-field").removeAttribute("onblur");
+            document.getElementById("number-field").blur();
+            document.getElementById("form-container").style.maxWidth = 0;
 
-    document.getElementById("form-container").style.maxWidth = 0;
+            setTimeout(function () {
+                document.getElementById("alternate-info").className += 'hidden';
+                document.getElementById("instruction").className += 'hidden';
+            }, 600);
 
-    setTimeout(function () {
-        document.getElementById("alternate-info").className += 'hidden';
-        document.getElementById("instruction").className += 'hidden';
-    }, 600);
+            setTimeout(function () {
+                document.getElementById("form-container").style.maxWidth = '1000px';
+            }, 600);
 
-    setTimeout(function () {
-        document.getElementById("form-container").style.maxWidth = '1000px';
-    }, 600);
-
-    setTimeout(function () {
-        document.getElementById("first-name").className -= 'hidden';
-        document.getElementById("last-name").className -= 'hidden';
-        document.getElementById("m-number").className -= 'hidden';
-        document.getElementById("email").className -= 'hidden';
-        document.getElementById("submit-button").className -= 'hidden';
-    }, 600);
+            setTimeout(function () {
+                document.getElementById("first-name").className -= 'hidden';
+                document.getElementById("last-name").className -= 'hidden';
+                document.getElementById("email").className -= 'hidden';
+                document.getElementById("submit-button").className -= 'hidden';
+            }, 600);
+        }
+    });
 }
 
 ////Handles submission for the form and takes attendance
@@ -70,21 +90,16 @@ SubmitInfo = function() {
     let member = {
         first: document.querySelector("#first-name").value,
         last: document.querySelector("#last-name").value,
-        mNumber: document.querySelector("#m-number").value.toString().toLowerCase(),
         email: document.querySelector("#email").value.toLowerCase(),
         id: document.getElementById("hidden-id-container").textContent
     };
 
-    if (member.mNumber[0] === "m") {
-        member.mNumber = member.mNumber.substring(1);
-    }
-
     //Query to see if member exists. If not, add to member table. In both cases, add to attendance table
-    GetMemberData(document.getElementById("hidden-id-container").textContent, member.mNumber).then(function (result) {
+    GetMemberData(document.getElementById("hidden-id-container").textContent, member.email).then(function (result) {
         if (!result.exists) {
             SendMemberData(member);
         }
-        MarkAttendance(member.mNumber);
+        MarkAttendance(member.email);
     });
 
     FinishSignIn();
@@ -106,7 +121,6 @@ FinishSignIn = function () {
         if (document.getElementById("alternate-info").classList.contains('hidden')) {
             document.getElementById("first-name").className += ' hidden';
             document.getElementById("last-name").className += ' hidden';
-            document.getElementById("m-number").className += ' hidden';
             document.getElementById("email").className += ' hidden';
             document.getElementById("submit-button").className += ' hidden';
         }
@@ -138,7 +152,6 @@ const SendMemberData = function (member) {
     let submissionData = {
         firstName: member.first,
         lastName: member.last,
-        mNumber: member.mNumber,
         email: member.email,
         id: member.id
     }
@@ -163,12 +176,12 @@ const SendMemberData = function (member) {
 }
 
 ////Requests sql server for user's existance in the member table
-const GetMemberData = function (id, MNum) {
+const GetMemberData = function (id, email) {
 
     return new Promise(function(resolve, reject) {
         let submissionData = {
             ID: id,
-            MNum: MNum
+            email: email
         }
         let submissionFormData = new FormData();
         for (let i in submissionData) {
@@ -187,9 +200,9 @@ const GetMemberData = function (id, MNum) {
 }
 
 ////Work In Progress
-const SendAttendance = function (mNum, date) {
+const SendAttendance = function (email, date) {
     let submissionData = {
-        mNum: mNum,
+        email: email,
         date: date
     }
 
@@ -215,34 +228,47 @@ const SendAttendance = function (mNum, date) {
 }
 
 //Creates a new column for the current date if not in the attendance table
-const ValidateDate = function (currentDate) {
+//const ValidateDate = function (currentDate) {
 
+//    return new Promise(function (resolve, reject) {
+
+//        let submissionData = {
+//            date: currentDate
+//        }
+
+//        let submissionFormData = new FormData();
+
+//        for (let i in submissionData) {
+//            submissionFormData.append(i, submissionData[i]);
+//        }
+
+//        fetch("/api/send_date.php", {
+//            method: "POST",
+//            body: submissionFormData,
+//        })
+//            .then(response => {
+//                if (response.ok) {
+//                    console.log("date validated successfully");
+//                    console.log(response.text());
+//                    resolve(response.ok);
+//                } else {
+//                    console.log("issue validating date");
+//                    console.log(response.text());
+//                    resolve(response.ok);
+//                }
+//            });
+//    });
+//}
+
+//Checks that sign in is currently open
+const CheckOpen = function () {
     return new Promise(function (resolve, reject) {
-
-        let submissionData = {
-            date: currentDate
-        }
-
-        let submissionFormData = new FormData();
-
-        for (let i in submissionData) {
-            submissionFormData.append(i, submissionData[i]);
-        }
-
-        fetch("/api/send_date.php", {
-            method: "POST",
-            body: submissionFormData,
+        fetch("api/get_open.php", {
+            method: "POST"
         })
-            .then(response => {
-                if (response.ok) {
-                    console.log("date validated successfully");
-                    console.log(response.text());
-                    resolve(response.ok);
-                } else {
-                    console.log("issue validating date");
-                    console.log(response.text());
-                    resolve(response.ok);
-                }
+            .then(response => response.json())
+            .then((result) => {
+                resolve(result);
             });
     });
 }

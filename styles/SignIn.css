@@ -41,7 +41,7 @@ header img {
 
 #main-container {
     background: #cb2d3e; /* fallback for old browsers */
-    background: linear-gradient(to top, #ef473a, #cb2d3e), url(../images/thebeach.jpg); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to top, #ef473a, #cb2d3e), url(../images/baldwin.jpg); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background-size: cover;
     background-position: center;
     background-blend-mode: darken;
