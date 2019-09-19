@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 19, 2019 at 12:24 AM
+-- Generation Time: Sep 19, 2019 at 12:27 AM
 -- Server version: 5.7.24-log
 -- PHP Version: 7.2.10
 
@@ -21,44 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `sign_in`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sign_in_attendance`
---
-
-CREATE TABLE `sign_in_attendance` (
-  `Date` varchar(128) NOT NULL,
-  `Email` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `sign_in_attendance`
---
-
-INSERT INTO `sign_in_attendance` (`Date`, `Email`) VALUES
-('09/18/2019', 'huber2jb@mail.uc.edu'),
-('09/18/2019', 'muhats@mail.uc.edu'),
-('09/19/2019', 'huber2jb@mail.uc.edu');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sign_in_info`
---
-
-CREATE TABLE `sign_in_info` (
-  `id` int(11) NOT NULL,
-  `open` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `sign_in_info`
---
-
-INSERT INTO `sign_in_info` (`id`, `open`) VALUES
-(1, 1);
 
 -- --------------------------------------------------------
 
@@ -86,32 +48,10 @@ INSERT INTO `sign_in_members` (`FirstName`, `LastName`, `Email`, `ID`) VALUES
 --
 
 --
--- Indexes for table `sign_in_attendance`
---
-ALTER TABLE `sign_in_attendance`
-  ADD PRIMARY KEY (`Date`,`Email`);
-
---
--- Indexes for table `sign_in_info`
---
-ALTER TABLE `sign_in_info`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `sign_in_members`
 --
 ALTER TABLE `sign_in_members`
   ADD PRIMARY KEY (`ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `sign_in_info`
---
-ALTER TABLE `sign_in_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
