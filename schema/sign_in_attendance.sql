@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 19, 2019 at 12:27 AM
+-- Generation Time: Sep 19, 2019 at 12:29 AM
 -- Server version: 5.7.24-log
 -- PHP Version: 7.2.10
 
@@ -32,15 +32,6 @@ CREATE TABLE `sign_in_attendance` (
   `Date` varchar(128) NOT NULL,
   `Email` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `sign_in_attendance`
---
-
-INSERT INTO `sign_in_attendance` (`Date`, `Email`) VALUES
-('09/18/2019', 'huber2jb@mail.uc.edu'),
-('09/18/2019', 'muhats@mail.uc.edu'),
-('09/19/2019', 'huber2jb@mail.uc.edu');
 
 --
 -- Indexes for dumped tables

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 19, 2019 at 12:27 AM
+-- Generation Time: Sep 19, 2019 at 12:29 AM
 -- Server version: 5.7.24-log
 -- PHP Version: 7.2.10
 
@@ -34,13 +34,6 @@ CREATE TABLE `sign_in_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `sign_in_info`
---
-
-INSERT INTO `sign_in_info` (`id`, `open`) VALUES
-(1, 1);
-
---
 -- Indexes for dumped tables
 --
 
@@ -58,7 +51,7 @@ ALTER TABLE `sign_in_info`
 -- AUTO_INCREMENT for table `sign_in_info`
 --
 ALTER TABLE `sign_in_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
